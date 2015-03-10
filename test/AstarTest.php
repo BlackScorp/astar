@@ -42,6 +42,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $astar->blocked(array(1));
 
         $result = $astar->search($start_node, $end_node);
+        var_dump($result);
         $this->assertEmpty($result);
     }
     public function testRightBottomPath(){
@@ -112,21 +113,22 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $result = $astar->search($start_node, $end_node);
         $this->assertSame(8,count($result));
     }
-    public function testVisitedPath(){
+    public function testPathWithCosts(){
         $map = [
             0 => [0, 0, 0, 0, 0],
-            1 => [1, 1, 0, 1, 0],
+            1 => [4, 1, 0, 1, 0],
             2 => [0, 0, 0, 1, 0],
             3 => [0, 1, 1, 0, 0],
             4 => [0, 1, 0, 0, 1],
         ];
         $graph = new \BlackScorp\Astar\Graph($map);
         $start_node = $graph->node(0, 0);
-        $end_node = $graph->node(4,2);
+        $end_node = $graph->node(0,2);
         $astar = new \BlackScorp\Astar\Astar($graph);
         $astar->blocked(array(1));
 
         $result = $astar->search($start_node, $end_node);
+
         $this->assertSame(6,count($result));
     }
     public function testDiagonalHeursitic(){

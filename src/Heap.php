@@ -3,7 +3,7 @@ namespace BlackScorp\Astar;
 class Heap {
 
     private $nodes = array();
-    
+
 
     public function score(Node $n) {
         return $n->getF();

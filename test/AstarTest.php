@@ -124,7 +124,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $map = [
             [0, 0, 0, 0, 0],
             [4, 1, 0, 1, 0],
-            [0, 4, 0, 1, 0],
+            [0, 0, 0, 1, 0],
             [0, 1, 0, 0, 0],
             [0, 1, 0, 0, 1],
         ];
@@ -135,7 +135,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $astar->blocked(array(1));
 
         $result = $astar->search($start_node, $end_node);
-
+        var_dump($result);
         $this->assertSame(6, count($result));
     }
 

@@ -41,6 +41,46 @@ class Astar
         if (!$this->heuristic)
             $this->setHeuristic(new Manhattan());
 
+        $astarHeap = new AstarHeap();
+        $astarHeap->insert($start);
+
+        while ($astarHeap->valid()) {
+            $current = $astarHeap->current();
+            if ($current === $end) {
+                
+                $result = array();
+                $curr = $current;
+
+                while ($curr->getParent()) {
+                    $result[] = $curr;
+                    $curr = $curr->getParent();
+                }
+                return array_reverse($result);
+            }
+            $current->close();
+            foreach ($this->grid->getNeighbors($current, $this->diagonal) as $neighbor) {
+
+                if ($neighbor->isClosed() || in_array($neighbor->getCosts(), $this->blocked)) {
+                    continue;
+                }
+                $score = $current->getG() + $neighbor->getCosts();
+                $visited = $neighbor->isVisited();
+                if (!$visited || $score < $neighbor->getG()) {
+
+                    $neighbor->visit();
+                    $neighbor->setParent($current);
+                    $neighbor->setH($this->heuristic->compare($neighbor, $end));
+                    $neighbor->setG($score);
+                    $neighbor->setF($neighbor->getG() + $neighbor->getH());
+                    if (!$visited) {
+                        $astarHeap->insert($neighbor);
+                    }
+                }
+
+            }
+            $astarHeap->next();
+        }
+        return array();
         $heap = new Heap();
         $heap->push($start);
 

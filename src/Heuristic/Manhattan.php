@@ -1,8 +1,9 @@
 <?php
 namespace BlackScorp\Astar\Heuristic;
+use BlackScorp\Astar\HeuristicInterface;
 use BlackScorp\Astar\Node;
 
-class Manhattan {
+class Manhattan implements HeuristicInterface{
 
     public function compare(Node $n0, Node $n1) {
   

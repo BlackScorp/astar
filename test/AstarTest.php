@@ -3,12 +3,6 @@
 class AstarTest extends PHPUnit_Framework_TestCase
 {
 
-    public function setUp()
-    {
-
-
-    }
-
     public function testSimplePath()
     {
         $map = [
@@ -159,7 +153,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $end_node = $graph->node(4, 4);
         $astar = new \BlackScorp\Astar\Astar($graph);
         $astar->blocked(array(1));
-        $astar->heuristic(\BlackScorp\Astar\Astar::DIAGONAL);
+        $astar->setHeuristic(new \BlackScorp\Astar\Heuristic\Diagonal());
         $result = $astar->search($start_node, $end_node);
         $this->assertSame(8, count($result));
     }

@@ -1,40 +1,46 @@
 <?php
 namespace BlackScorp\Astar;
 
-class Astar {
+use BlackScorp\Astar\Heuristic\Manhattan;
+
+class Astar
+{
 
     private $diagonal = FALSE;
     private $blocked = array();
-    private $heuristic = NULL;
-    private $grid = array();
+    private $heuristic = null;
+    private $grid = null;
 
-    const MANHATTAN = 'manhattan';
-    const DIAGONAL = 'diagonal';
 
-    public function blocked(array $types) {
+    public function blocked(array $types)
+    {
         $this->blocked = $types;
         return $this;
     }
 
-    public function diagonal($diagonal) {
+    public function diagonal($diagonal)
+    {
         $this->diagonal = $diagonal;
         return $this;
     }
 
-    public function heuristic($heuristic) {
-        $this->heuristic = Heuristic::factory($heuristic);
-        return $this;
-    }
 
-    public function __construct(Graph $grid) {
+    public function __construct(Graph $grid)
+    {
         $this->grid = $grid;
         return $this;
     }
 
-    public function search(Node $start, Node $end) {
+    public function setHeuristic(HeuristicInterface $heuristic)
+    {
+        $this->heuristic = $heuristic;
+    }
+
+    public function search(Node $start, Node $end)
+    {
 
         if (!$this->heuristic)
-            $this->heuristic(Astar::MANHATTAN);
+            $this->setHeuristic(new Manhattan());
 
         $heap = new Heap();
         $heap->push($start);
@@ -56,8 +62,7 @@ class Astar {
             $current->close();
 
 
-
-            foreach ($this->grid->getNeighbors($current,$this->diagonal) as $neighbor) {
+            foreach ($this->grid->getNeighbors($current, $this->diagonal) as $neighbor) {
 
                 if ($neighbor->isClosed() || in_array($neighbor->getCosts(), $this->blocked)) {
                     continue;
@@ -70,7 +75,7 @@ class Astar {
                     $neighbor->setParent($current);
                     $neighbor->setH($this->heuristic->compare($neighbor, $end));
                     $neighbor->setG($score);
-                    $neighbor->setF( $neighbor->getG() + $neighbor->getH());
+                    $neighbor->setF($neighbor->getG() + $neighbor->getH());
 
                     if (!$visited) {
                         $heap->push($neighbor);

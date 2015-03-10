@@ -27,7 +27,7 @@ class Astar {
     }
 
     public function __construct(Graph $grid) {
-        $this->grid = $grid->nodes();
+        $this->grid = $grid;
         return $this;
     }
 
@@ -56,7 +56,7 @@ class Astar {
             $current->closed = true;
 
 
-            foreach ($this->neighbors($this->grid, $current) as $neighbor) {
+            foreach ($this->grid->getNeighbors($current,$this->diagonal) as $neighbor) {
 
                 if ($neighbor->closed || in_array($neighbor->type, $this->blocked)) {
                     continue;
@@ -79,57 +79,6 @@ class Astar {
         }
 
         return array();
-    }
-
-    private function neighbors(array $grid, Node $node) {
-        $result = array();
-        $x = $node->x;
-        $y = $node->y;
-
-        // West
-        if (isset($grid[$y - 1]) && isset($grid[$y - 1][$x])) {
-            $result[] = ($grid[$y - 1][$x]);
-        }
-
-        // East
-        if (isset($grid[$y + 1]) && isset($grid[$y + 1][$x])) {
-            $result[] = ($grid[$y + 1][$x]);
-        }
-
-        // South
-        if (isset($grid[$y]) && isset($grid[$y][$x - 1])) {
-            $result[] = ($grid[$y][$x - 1]);
-        }
-
-        // North
-        if (isset($grid[$y]) && isset($grid[$y][$x + 1])) {
-            $result[] = ($grid[$y][$x + 1]);
-        }
-
-        if ($this->diagonal) {
-
-            // Southwest
-            if (isset($grid[$y - 1]) && isset($grid[$y - 1][$x - 1])) {
-                $result[] = ($grid[$y - 1][$x - 1]);
-            }
-
-            // Southeast
-            if (isset($grid[$y + 1]) && isset($grid[$y + 1][$x - 1])) {
-                $result[] = ($grid[$y + 1][$x - 1]);
-            }
-
-            // Northwest
-            if (isset($grid[$y - 1]) && isset($grid[$y - 1][$x + 1])) {
-                $result[] = ($grid[$y - 1][$x + 1]);
-            }
-
-            // Northeast
-            if (isset($grid[$y + 1]) && isset($grid[$y + 1][$x + 1])) {
-                $result[] = ($grid[$y + 1][$x + 1]);
-            }
-        }
-
-        return $result;
     }
 
 }

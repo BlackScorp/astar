@@ -16,11 +16,6 @@ class Graph
         }
     }
 
-    public function nodes()
-    {
-        return $this->nodes;
-    }
-
     public function node($y, $x)
     {
         return isset($this->nodes[$y][$x])?$this->nodes[$y][$x]:false;
@@ -37,49 +32,26 @@ class Graph
         $x = $node->getX();
         $y = $node->getY();
 
-        // West
-        if (isset($this->nodes[$y - 1]) && isset($this->nodes[$y - 1][$x])) {
-            $result[] = ($this->nodes[$y - 1][$x]);
+        $neighbourLocations = [
+            [$y -1,$x],
+            [$y +1,$x],
+            [$y,$x-1],
+            [$y,$x+1]
+        ];
+        if($diagonal){
+            $neighbourLocations[]=[$y-1,$x-1];
+            $neighbourLocations[]=[$y+1,$x-1];
+            $neighbourLocations[]=[$y-1,$x+1];
+            $neighbourLocations[]=[$y+1,$x+1];
         }
-
-        // East
-        if (isset($this->nodes[$y + 1]) && isset($this->nodes[$y + 1][$x])) {
-            $result[] = ($this->nodes[$y + 1][$x]);
-        }
-
-        // South
-        if (isset($this->nodes[$y]) && isset($this->nodes[$y][$x - 1])) {
-            $result[] = ($this->nodes[$y][$x - 1]);
-        }
-
-        // North
-        if (isset($this->nodes[$y]) && isset($this->nodes[$y][$x + 1])) {
-            $result[] = ($this->nodes[$y][$x + 1]);
-        }
-
-        if ($diagonal) {
-
-            // Southwest
-            if (isset($this->nodes[$y - 1]) && isset($this->nodes[$y - 1][$x - 1])) {
-                $result[] = ($this->nodes[$y - 1][$x - 1]);
+        foreach($neighbourLocations as $location){
+            list($y,$x) = $location;
+            $node = $this->node($y,$x);
+            if($node){
+                $result[]=$node;
             }
 
-            // Southeast
-            if (isset($this->nodes[$y + 1]) && isset($this->nodes[$y + 1][$x - 1])) {
-                $result[] = ($this->nodes[$y + 1][$x - 1]);
-            }
-
-            // Northwest
-            if (isset($this->nodes[$y - 1]) && isset($this->nodes[$y - 1][$x + 1])) {
-                $result[] = ($this->nodes[$y - 1][$x + 1]);
-            }
-
-            // Northeast
-            if (isset($this->nodes[$y + 1]) && isset($this->nodes[$y + 1][$x + 1])) {
-                $result[] = ($this->nodes[$y + 1][$x + 1]);
-            }
         }
-
         return $result;
     }
 

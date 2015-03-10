@@ -24,7 +24,6 @@ class Astar
         return $this;
     }
 
-
     public function __construct(Graph $grid)
     {
         $this->grid = $grid;

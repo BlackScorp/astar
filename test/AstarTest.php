@@ -25,6 +25,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $astar->blocked(array(1));
 
         $result = $astar->search($start_node, $end_node);
+
         $this->assertSame(1, count($result));
     }
 
@@ -44,7 +45,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $astar->blocked(array(1));
 
         $result = $astar->search($start_node, $end_node);
-        var_dump($result);
+
         $this->assertEmpty($result);
     }
 

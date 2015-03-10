@@ -1,6 +1,8 @@
 <?php
+namespace BlackScorp\Astar\Heuristic;
+use BlackScorp\Astar\Node;
 
-class Astar_Heuristic_Diagonal {
+class Diagonal {
 
      public function compare(Node $n0, Node $n1) {
      

@@ -1,6 +1,7 @@
 <?php
+namespace BlackScorp\Astar;
 
-class Astar_Node {
+class Node {
 
     private $data = array();
 

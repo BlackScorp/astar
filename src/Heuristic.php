@@ -1,8 +1,10 @@
 <?php
+namespace BlackScorp\Astar;
 
-class Astar_Heuristic {
+class Heuristic {
      public static function factory($type){
-        $class = 'Astar_Heuristic_'.ucfirst($type);
+         $class = '\\BlackScorp\\Astar\\Heuristic\\'.ucfirst($type);
+
         return new $class;
     }
 }

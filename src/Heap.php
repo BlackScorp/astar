@@ -1,6 +1,6 @@
 <?php
-
-class Astar_Heap {
+namespace BlackScorp\Astar;
+class Heap {
 
     private $nodes = array();
  

@@ -1,6 +1,7 @@
 <?php
+namespace BlackScorp\Astar;
 
-class Astar_Graph {
+class Graph {
 
     private $nodes = array();
 

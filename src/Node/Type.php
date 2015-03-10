@@ -1,6 +1,6 @@
 <?php
-
-class Astar_Node_Type {
+namespace BlackScorp\Astar\Node;
+class Type {
 
     const WALL = 1;
     const OPEN = 0;

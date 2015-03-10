@@ -1,6 +1,7 @@
 <?php
+namespace BlackScorp\Astar;
 
-class Astar_Astar {
+class Astar {
 
     private $diagonal = FALSE;
     private $blocked = array();

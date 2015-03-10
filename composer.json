@@ -1,0 +1,17 @@
+{
+  "name": "blackscorp/astar",
+  "description": "AStar pathfinding implementation in php",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vitalij Mik",
+      "email": "cccpmik+composer@gmail.com"
+    }
+  ],
+  "autoload":{
+    "psr-4":{
+      "BlackScorp/Astar//":"src/"
+    }
+  }
+}

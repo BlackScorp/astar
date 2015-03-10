@@ -72,7 +72,7 @@ class Astar {
                     if (!$visited) {
                         $heap->push($neighbor);
                     } else {
-                        $heap->rescoreElement($neighbor);
+                        $heap->rescore_element($neighbor);
                     }
                 }
             }

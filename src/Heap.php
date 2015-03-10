@@ -7,7 +7,7 @@ class Heap {
    
 
     public function score(Node $n) {
-        return $n->f;
+        return $n->getF();
     }
  
     public function push(Node $n) {
@@ -15,6 +15,9 @@ class Heap {
         $this->sink_down($this->size() - 1);
     }
 
+    /**
+     * @return Node
+     */
     public function pop() {
         $result = $this->nodes[0];
         $end = array_pop($this->nodes);

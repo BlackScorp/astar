@@ -1,23 +1,123 @@
 <?php
 namespace BlackScorp\Astar;
 
-class Node {
+class Node
+{
+    private $x = 0;
+    private $y = 0;
+    private $costs = 0;
+    private $visited = false;
+    private $closed = false;
+    private $parent = null;
+    private $f = 0;
+    private $g = 0;
+    private $h = 0;
 
-    private $data = array();
-
-   
-    public function __construct($y,$x,$type){
+    public function __construct($y, $x, $costs)
+    {
         $this->x = (int)$x;
-        $this->y =(int) $y;
-        $this->type = (int)$type;
+        $this->y = (int)$y;
+        $this->costs = (int)$costs;
     }
 
-    public function __set($name, $value) {
-        $this->data[$name] = $value;
+    /**
+     * @return int
+     */
+    public function getX()
+    {
+        return $this->x;
     }
-    public function __get($name) {
-        if(isset($this->data[$name])) return $this->data[$name];
-    
-        return false;
+
+    /**
+     * @return int
+     */
+    public function getY()
+    {
+        return $this->y;
+    }
+
+    /**
+     * @param int $f
+     */
+    public function setF($f)
+    {
+        $this->f = $f;
+    }
+
+    /**
+     * @param int $g
+     */
+    public function setG($g)
+    {
+        $this->g = $g;
+    }
+
+    /**
+     * @param int $h
+     */
+    public function setH($h)
+    {
+        $this->h = $h;
+    }
+
+    public function visit(){
+        $this->visited = true;
+    }
+    public function close(){
+        $this->closed = true;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCosts()
+    {
+        return $this->costs;
+    }
+
+    /**
+     * @param Node $parent
+     */
+    public function setParent(Node $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return null
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @return int
+     */
+    public function getF()
+    {
+        return $this->f;
+    }
+
+    /**
+     * @return int
+     */
+    public function getG()
+    {
+        return $this->g;
+    }
+
+    /**
+     * @return int
+     */
+    public function getH()
+    {
+        return $this->h;
+    }
+    public function isClosed(){
+        return $this->closed === true;
+    }
+    public function isVisited(){
+        return $this->visited === true;
     }
 }

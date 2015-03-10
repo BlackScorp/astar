@@ -47,28 +47,31 @@ class Astar {
                 $result = array();
                 $curr = $current;
 
-                while ($curr->parent) {
+                while ($curr->getParent()) {
                     $result[] = $curr;
-                    $curr = $curr->parent;
+                    $curr = $curr->getParent();
                 }
                 return array_reverse($result);
             }
-            $current->closed = true;
+            $current->close();
+
 
 
             foreach ($this->grid->getNeighbors($current,$this->diagonal) as $neighbor) {
 
-                if ($neighbor->closed || in_array($neighbor->type, $this->blocked)) {
+                if ($neighbor->isClosed() || in_array($neighbor->getCosts(), $this->blocked)) {
                     continue;
                 }
-                $score = $current->g + $neighbor->cost;
-                $visited = $neighbor->visited;
-                if (!$visited || $score < $neighbor->g) {
-                    $neighbor->visited = TRUE;
-                    $neighbor->parent = $current;
-                    $neighbor->h = $this->heuristic->compare($neighbor, $end);
-                    $neighbor->g = $score;
-                    $neighbor->f = $neighbor->g + $neighbor->h;
+                $score = $current->getG() + $neighbor->getCosts();
+                $visited = $neighbor->isVisited();
+                if (!$visited || $score < $neighbor->getG()) {
+
+                    $neighbor->visit();
+                    $neighbor->setParent($current);
+                    $neighbor->setH($this->heuristic->compare($neighbor, $end));
+                    $neighbor->setG($score);
+                    $neighbor->setF( $neighbor->getG() + $neighbor->getH());
+
                     if (!$visited) {
                         $heap->push($neighbor);
                     } else {

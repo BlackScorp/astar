@@ -12,14 +12,6 @@ class Graph
         foreach ($grid as $y => $cols) {
             foreach ($cols as $x => $value) {
                 $this->nodes[$y][$x] = new Node($y, $x, $value);
-                $node = $this->nodes[$y][$x];
-                $node->f = 0;
-                $node->g = 0;
-                $node->h = 0;
-                $node->cost = (int)$node->type;
-                $node->visited = false;
-                $node->closed = false;
-                $node->parent = null;
             }
         }
     }
@@ -31,17 +23,19 @@ class Graph
 
     public function node($y, $x)
     {
-        if (isset($this->nodes[$y][$x]))
-            return $this->nodes[$y][$x];
-
-        return false;
+        return isset($this->nodes[$y][$x])?$this->nodes[$y][$x]:false;
     }
 
+    /**
+     * @param Node $node
+     * @param bool $diagonal
+     * @return Node[]
+     */
     public function getNeighbors(Node $node, $diagonal = false)
     {
         $result = array();
-        $x = $node->x;
-        $y = $node->y;
+        $x = $node->getX();
+        $y = $node->getY();
 
         // West
         if (isset($this->nodes[$y - 1]) && isset($this->nodes[$y - 1][$x])) {

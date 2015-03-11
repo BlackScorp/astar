@@ -9,8 +9,9 @@ class Node
     private $visited = false;
     private $closed = false;
     private $parent = null;
-    private $f = 0;
-    private $h = 0;
+
+    private $totalScore = 0;
+    private $guessedScore = 0;
     private $score = 0;
     public function __construct($y, $x, $costs)
     {
@@ -36,20 +37,19 @@ class Node
     }
 
     /**
-     * @param int $f
+     * @return int
      */
-    public function setF($f)
+    public function getTotalScore()
     {
-        $this->f = $f;
+        return $this->totalScore;
     }
 
-
     /**
-     * @param int $h
+     * @param int $totalScore
      */
-    public function setH($h)
+    public function setTotalScore($totalScore)
     {
-        $this->h = $h;
+        $this->totalScore = $totalScore;
     }
 
     public function visit(){
@@ -99,20 +99,23 @@ class Node
         return $this->parent;
     }
 
+
     /**
      * @return int
      */
-    public function getF()
+    public function getGuessedScore()
     {
-        return $this->f;
+        return $this->guessedScore;
     }
+
     /**
-     * @return int
+     * @param int $guessedScore
      */
-    public function getH()
+    public function setGuessedScore($guessedScore)
     {
-        return $this->h;
+        $this->guessedScore = $guessedScore;
     }
+
     public function isClosed(){
         return $this->closed === true;
     }

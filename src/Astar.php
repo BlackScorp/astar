@@ -46,6 +46,9 @@ class Astar
         $heap->insert($start);
 
         $current = $this->fillHeap($heap, $start, $end);
+        if($current !== $end){
+            return [];
+        }
         return $this->getReversedPath($current);
 
     }

@@ -16,7 +16,12 @@ class Grid
         }
     }
 
-    public function node($y, $x)
+    /**
+     * @param $y
+     * @param $x
+     * @return Node | false
+     */
+    public function getPoint($y, $x)
     {
         return isset($this->nodes[$y][$x])?$this->nodes[$y][$x]:false;
     }
@@ -46,7 +51,7 @@ class Grid
         }
         foreach($neighbourLocations as $location){
             list($y,$x) = $location;
-            $node = $this->node($y,$x);
+            $node = $this->getPoint($y,$x);
             if($node){
                 $result[]=$node;
             }

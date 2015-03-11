@@ -29,27 +29,25 @@ class AstarTest extends PHPUnit_Framework_TestCase
     public function testSimplePath()
     {
         $start = $this->map->getPoint(0,0);
-        $end = $this->map->getPoint(0,1);
+        $end = $this->map->getPoint(1,1);
         $result = $this->astar->search($start,$end);
-        $this->assertSame(1, count($result));
+        $this->assertSame(2, count($result));
     }
-
-    public function testEmptyPath()
-    {
-        $start = $this->map->getPoint(0,0);
-        $end = $this->map->getPoint(4,4);
-        $this->astar->blocked(array(1));
-        $result = $this->astar->search($start,$end);
-        $this->assertEmpty($result);
-    }
-
-    public function testDiagonalPath()
+    public function testSimpleDiagonalPath()
     {
         $start = $this->map->getPoint(0,0);
         $end = $this->map->getPoint(1,1);
         $this->astar->diagonal(true);
         $result = $this->astar->search($start,$end);
         $this->assertSame(1, count($result));
+    }
+    public function testUnreachablePath()
+    {
+        $start = $this->map->getPoint(0,0);
+        $end = $this->map->getPoint(4,4);
+        $this->astar->blocked(array(1));
+        $result = $this->astar->search($start,$end);
+        $this->assertEmpty($result);
     }
 
     public function testDiagonalHeuristic()

@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vitalij.mik
- * Date: 10/03/2015
- * Time: 15:47
- */
-
 namespace BlackScorp\Astar;
 
 
@@ -27,6 +20,7 @@ class AstarHeap extends \SplHeap{
      */
     protected function compare($value1,$value2)
     {
+
         if($value1->getF() === $value2->getF()) return 0;
        return ($value1->getF() < $value2->getF())? -1 : 1 ;
     }

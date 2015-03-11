@@ -61,8 +61,8 @@ class Astar
                 return array_reverse($result);
             }
             $current->close();
-            foreach ($this->grid->getNeighbors($current, $this->diagonal) as $neighbor) {
-
+            $neighbors = $this->grid->getNeighbors($current, $this->diagonal);
+            foreach ($neighbors as $neighbor) {
                 if ($neighbor->isClosed() || in_array($neighbor->getCosts(), $this->blocked)) {
                     continue;
                 }
@@ -81,6 +81,7 @@ class Astar
                 }
 
             }
+
             $astarHeap->next();
         }
 

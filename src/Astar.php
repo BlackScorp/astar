@@ -48,7 +48,11 @@ class Astar
         $astarHeap->insert($start);
 
         while ($astarHeap->valid()) {
+            /**
+             * @var Node $current
+             */
             $current = $astarHeap->extract();
+
             if ($current === $end) {
 
                 $result = array();
@@ -66,15 +70,14 @@ class Astar
                 if ($neighbor->isClosed() || in_array($neighbor->getCosts(), $this->blocked)) {
                     continue;
                 }
-                $score = $current->getG() + $neighbor->getCosts();
+                $score = $current->getScore() + $neighbor->getCosts();
                 $visited = $neighbor->isVisited();
-                if (!$visited || $score < $neighbor->getG()) {
-
+                if (!$visited  || $score < $neighbor->getScore()) {
                     $neighbor->visit();
                     $neighbor->setParent($current);
                     $neighbor->setH($this->heuristic->compare($neighbor, $end));
-                    $neighbor->setG($score);
-                    $neighbor->setF($neighbor->getG() + $neighbor->getH());
+                    $neighbor->setScore($score);
+                    $neighbor->setF($neighbor->getScore() + $neighbor->getH());
                     if (!$visited) {
                         $astarHeap->insert($neighbor);
                     }

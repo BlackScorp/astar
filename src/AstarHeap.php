@@ -22,7 +22,7 @@ class AstarHeap extends \SplHeap{
     {
 
         if($value1->getF() === $value2->getF()) return 0;
-       return ($value1->getF() < $value2->getF())? -1 : 1 ;
+       return ($value1->getF() < $value2->getF())? 1 : -1 ;
     }
 
 }

@@ -133,8 +133,8 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $end_node = $graph->node(2, 0);
         $astar = new \BlackScorp\Astar\Astar($graph);
         $astar->blocked(array(1));
-
         $result = $astar->search($start_node, $end_node);
+
         $this->assertSame(6, count($result));
     }
 

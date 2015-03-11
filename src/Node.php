@@ -10,9 +10,8 @@ class Node
     private $closed = false;
     private $parent = null;
     private $f = 0;
-    private $g = 0;
     private $h = 0;
-
+    private $score = 0;
     public function __construct($y, $x, $costs)
     {
         $this->x = (int)$x;
@@ -44,13 +43,6 @@ class Node
         $this->f = $f;
     }
 
-    /**
-     * @param int $g
-     */
-    public function setG($g)
-    {
-        $this->g = $g;
-    }
 
     /**
      * @param int $h
@@ -65,6 +57,22 @@ class Node
     }
     public function close(){
         $this->closed = true;
+    }
+
+    /**
+     * @param int $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+    }
+
+    /**
+     * @return int
+     */
+    public function getScore()
+    {
+        return $this->score;
     }
 
     /**
@@ -98,15 +106,6 @@ class Node
     {
         return $this->f;
     }
-
-    /**
-     * @return int
-     */
-    public function getG()
-    {
-        return $this->g;
-    }
-
     /**
      * @return int
      */

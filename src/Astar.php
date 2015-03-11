@@ -43,15 +43,14 @@ class Astar
 
         if (!$this->heuristic)
             $this->setHeuristic(new Manhattan());
+        
+        $astarHeap = new AstarHeap();
+        $astarHeap->insert($start);
 
-        $heap = new Heap();
-        $heap->push($start);
-
-
-        while ($heap->size() > 0) {
-
-            $current = $heap->pop();
+        while ($astarHeap->valid()) {
+            $current = $astarHeap->current();
             if ($current === $end) {
+
                 $result = array();
                 $curr = $current;
 
@@ -62,8 +61,6 @@ class Astar
                 return array_reverse($result);
             }
             $current->close();
-
-
             foreach ($this->grid->getNeighbors($current, $this->diagonal) as $neighbor) {
 
                 if ($neighbor->isClosed() || in_array($neighbor->getCosts(), $this->blocked)) {
@@ -78,14 +75,13 @@ class Astar
                     $neighbor->setH($this->heuristic->compare($neighbor, $end));
                     $neighbor->setG($score);
                     $neighbor->setF($neighbor->getG() + $neighbor->getH());
-
                     if (!$visited) {
-                        $heap->push($neighbor);
-                    } else {
-                        $heap->rescore_element($neighbor);
+                        $astarHeap->insert($neighbor);
                     }
                 }
+
             }
+            $astarHeap->next();
         }
 
         return array();

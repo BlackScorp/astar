@@ -12,7 +12,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
             [1, 0, 0, 0, 1],
             [1, 1, 1, 1, 1],
         ];
-        $graph = new \BlackScorp\Astar\Graph($map);
+        $graph = new \BlackScorp\Astar\Grid($map);
         $start_node = $graph->node(1, 1);
         $end_node = $graph->node(1, 2);
         $astar = new \BlackScorp\Astar\Astar($graph);
@@ -32,7 +32,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
             [1, 0, 0, 0, 1],
             [1, 1, 1, 1, 1],
         ];
-        $graph = new \BlackScorp\Astar\Graph($map);
+        $graph = new \BlackScorp\Astar\Grid($map);
         $start_node = $graph->node(1, 1);
         $end_node = $graph->node(1, 3);
         $astar = new \BlackScorp\Astar\Astar($graph);
@@ -50,7 +50,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
             [1, 0, 0, 0, 1],
             [1, 1, 1, 1, 1],
         ];
-        $graph = new \BlackScorp\Astar\Graph($map);
+        $graph = new \BlackScorp\Astar\Grid($map);
         $start_node = $graph->node(1, 1);
         $end_node = $graph->node(2, 2);
         $astar = new \BlackScorp\Astar\Astar($graph);
@@ -69,7 +69,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
         ];
-        $graph = new \BlackScorp\Astar\Graph($map);
+        $graph = new \BlackScorp\Astar\Grid($map);
         $start_node = $graph->node(0, 0);
         $end_node = $graph->node(4, 4);
         $astar = new \BlackScorp\Astar\Astar($graph);

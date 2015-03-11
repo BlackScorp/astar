@@ -25,7 +25,7 @@ class Astar
         $this->diagonal = $diagonal;
     }
 
-    public function __construct(Graph $grid)
+    public function __construct(Grid $grid)
     {
         $this->grid = $grid;
     }

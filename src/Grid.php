@@ -1,7 +1,7 @@
 <?php
 namespace BlackScorp\Astar;
 
-class Graph
+class Grid
 {
 
     private $nodes = array();

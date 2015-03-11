@@ -48,7 +48,7 @@ class Astar
         $astarHeap->insert($start);
 
         while ($astarHeap->valid()) {
-            $current = $astarHeap->current();
+            $current = $astarHeap->extract();
             if ($current === $end) {
 
                 $result = array();
@@ -81,8 +81,6 @@ class Astar
                 }
 
             }
-
-            $astarHeap->next();
         }
 
         return array();

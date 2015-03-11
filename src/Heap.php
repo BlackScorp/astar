@@ -51,11 +51,12 @@ class Heap {
     private function index(Node $n) {
         foreach ($this->nodes as $i => $node) {
             if ($n === $node){
-                echo $i;
+
                     return $i;
             }
             
         }
+        return null;
     }
 
     public function rescore_element(Node $n) {
@@ -82,6 +83,7 @@ class Heap {
         $len = $this->size();
         $element = $this->nodes[$n];
         $elementScore = $this->score($element);
+        $child1Score = 0;
         while (true) {
             $child2N = ($n + 1) << 1;
             $child1N = $child2N - 1;

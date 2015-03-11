@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__.'/../vendor/autoload.php';
 class AstarTest extends PHPUnit_Framework_TestCase
 {
 
@@ -135,7 +135,6 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $astar->blocked(array(1));
 
         $result = $astar->search($start_node, $end_node);
-        var_dump($result);
         $this->assertSame(6, count($result));
     }
 

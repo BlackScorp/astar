@@ -16,7 +16,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $start_node = $graph->node(1, 1);
         $end_node = $graph->node(1, 2);
         $astar = new \BlackScorp\Astar\Astar($graph);
-        $astar->blocked(array(1));
+
 
         $result = $astar->search($start_node, $end_node);
 

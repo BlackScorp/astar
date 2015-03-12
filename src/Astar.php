@@ -6,7 +6,7 @@ use BlackScorp\Astar\Heuristic\Manhattan;
 class Astar
 {
 
-    private $diagonal = FALSE;
+    private $diagonal = false;
     private $blocked = array();
     /**
      * @var HeuristicInterface
@@ -18,19 +18,16 @@ class Astar
     public function blocked(array $types)
     {
         $this->blocked = $types;
-        return $this;
     }
 
     public function diagonal($diagonal)
     {
         $this->diagonal = $diagonal;
-        return $this;
     }
 
-    public function __construct(Graph $grid)
+    public function __construct(Grid $grid)
     {
         $this->grid = $grid;
-        return $this;
     }
 
     public function setHeuristic(HeuristicInterface $heuristic)
@@ -41,29 +38,35 @@ class Astar
     public function search(Node $start, Node $end)
     {
 
-        if (!$this->heuristic)
+        if (!$this->heuristic) {
             $this->setHeuristic(new Manhattan());
-        
-        $astarHeap = new AstarHeap();
-        $astarHeap->insert($start);
+        }
 
-        while ($astarHeap->valid()) {
+        $heap = new ScoreHeap();
+        $heap->insert($start);
+
+        $current = $this->fillHeap($heap, $start, $end);
+        if($current !== $end){
+            return [];
+        }
+        return $this->getReversedPath($current);
+
+    }
+
+    /**
+     * @param Node $end
+     * @param $heap
+     * @param $current
+     * @return Node
+     */
+    private function fillHeap(\SplHeap $heap, Node $current, Node $end)
+    {
+        while ($heap->valid() && $current !== $end) {
             /**
              * @var Node $current
              */
-            $current = $astarHeap->extract();
+            $current = $heap->extract();
 
-            if ($current === $end) {
-
-                $result = array();
-                $curr = $current;
-
-                while ($curr->getParent()) {
-                    $result[] = $curr;
-                    $curr = $curr->getParent();
-                }
-                return array_reverse($result);
-            }
             $current->close();
             $neighbors = $this->grid->getNeighbors($current, $this->diagonal);
             foreach ($neighbors as $neighbor) {
@@ -72,21 +75,34 @@ class Astar
                 }
                 $score = $current->getScore() + $neighbor->getCosts();
                 $visited = $neighbor->isVisited();
-                if (!$visited  || $score < $neighbor->getScore()) {
+                if (!$visited || $score < $neighbor->getScore()) {
                     $neighbor->visit();
                     $neighbor->setParent($current);
-                    $neighbor->setH($this->heuristic->compare($neighbor, $end));
+                    $neighbor->setGuessedScore($this->heuristic->compare($neighbor, $end));
                     $neighbor->setScore($score);
-                    $neighbor->setF($neighbor->getScore() + $neighbor->getH());
+                    $neighbor->setTotalScore($neighbor->getScore() + $neighbor->getGuessedScore());
                     if (!$visited) {
-                        $astarHeap->insert($neighbor);
+                        $heap->insert($neighbor);
                     }
                 }
 
             }
         }
+        return $current;
+    }
 
-        return array();
+    /**
+     * @param Node $current
+     * @return array
+     */
+    private function getReversedPath(Node $current)
+    {
+        $result = [];
+        while ($current->getParent()) {
+            $result[] = $current;
+            $current = $current->getParent();
+        }
+        return array_reverse($result);
     }
 
 }

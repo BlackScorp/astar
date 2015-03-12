@@ -5,11 +5,11 @@ use BlackScorp\Astar\Node;
 
 class Diagonal implements HeuristicInterface{
 
-     public function compare(Node $n0, Node $n1) {
+     public function compare(Node $node, Node $goal) {
 
-         $d1 = abs($n1->getX() - $n0->getX());
-         $d2 = abs($n1->getY() - $n0->getY());
-        return max($d1,$d2);
+         $deltaX = abs($node->getX() - $goal->getX());
+         $deltaY = abs($node->getY() - $goal->getY());
+        return max($deltaX,$deltaY);
     }
 
 }

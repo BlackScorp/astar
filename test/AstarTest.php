@@ -2,6 +2,7 @@
 use BlackScorp\Astar\Astar;
 use BlackScorp\Astar\Grid;
 use BlackScorp\Astar\Heuristic\Diagonal;
+use BlackScorp\Astar\Heuristic\Euclidean;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -60,6 +61,13 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $start = $this->map->getPoint(0, 0);
         $end = $this->map->getPoint(4, 3);
         $this->astar->setHeuristic(new Diagonal());
+        $result = $this->astar->search($start, $end);
+        $this->assertSame(7, count($result));
+    }
+    public function testEuclideanHeuristic(){
+        $start = $this->map->getPoint(0, 0);
+        $end = $this->map->getPoint(4, 3);
+        $this->astar->setHeuristic(new Euclidean());
         $result = $this->astar->search($start, $end);
         $this->assertSame(7, count($result));
     }

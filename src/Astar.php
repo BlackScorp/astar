@@ -20,9 +20,9 @@ class Astar
         $this->blocked = $types;
     }
 
-    public function diagonal($diagonal)
+    public function enableDiagonal()
     {
-        $this->diagonal = $diagonal;
+        $this->diagonal = true;
     }
 
     public function __construct(Grid $grid)

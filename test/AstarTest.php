@@ -42,7 +42,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
     {
         $start = $this->map->getPoint(0, 0);
         $end = $this->map->getPoint(1, 1);
-        $this->astar->diagonal(true);
+        $this->astar->enableDiagonal();
         $result = $this->astar->search($start, $end);
         $this->assertSame(1, count($result));
     }

@@ -1,6 +1,7 @@
 <?php
 namespace BlackScorp\Astar;
 
-interface HeuristicInterface {
+interface HeuristicInterface
+{
     public function compare(Node $node, Node $goal);
 }

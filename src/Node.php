@@ -13,6 +13,7 @@ class Node
     private $totalScore = 0;
     private $guessedScore = 0;
     private $score = 0;
+
     public function __construct($y, $x, $costs)
     {
         $this->x = (int)$x;
@@ -52,10 +53,13 @@ class Node
         $this->totalScore = $totalScore;
     }
 
-    public function visit(){
+    public function visit()
+    {
         $this->visited = true;
     }
-    public function close(){
+
+    public function close()
+    {
         $this->closed = true;
     }
 
@@ -116,10 +120,13 @@ class Node
         $this->guessedScore = $guessedScore;
     }
 
-    public function isClosed(){
+    public function isClosed()
+    {
         return $this->closed === true;
     }
-    public function isVisited(){
+
+    public function isVisited()
+    {
         return $this->visited === true;
     }
 }

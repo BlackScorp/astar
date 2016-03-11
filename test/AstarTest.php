@@ -3,7 +3,8 @@ use BlackScorp\Astar\Astar;
 use BlackScorp\Astar\Grid;
 use BlackScorp\Astar\Heuristic\Diagonal;
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
 class AstarTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -15,7 +16,8 @@ class AstarTest extends PHPUnit_Framework_TestCase
      */
     private $astar = null;
 
-    public function setUp(){
+    public function setUp()
+    {
         $map = [
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
@@ -26,36 +28,39 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $this->map = new Grid($map);
         $this->astar = new Astar($this->map);
     }
+
     public function testSimplePath()
     {
-        $start = $this->map->getPoint(0,0);
-        $end = $this->map->getPoint(1,1);
-        $result = $this->astar->search($start,$end);
+        $start = $this->map->getPoint(0, 0);
+        $end = $this->map->getPoint(1, 1);
+        $result = $this->astar->search($start, $end);
         $this->assertSame(2, count($result));
     }
+
     public function testSimpleDiagonalPath()
     {
-        $start = $this->map->getPoint(0,0);
-        $end = $this->map->getPoint(1,1);
+        $start = $this->map->getPoint(0, 0);
+        $end = $this->map->getPoint(1, 1);
         $this->astar->diagonal(true);
-        $result = $this->astar->search($start,$end);
+        $result = $this->astar->search($start, $end);
         $this->assertSame(1, count($result));
     }
+
     public function testUnreachablePath()
     {
-        $start = $this->map->getPoint(0,0);
-        $end = $this->map->getPoint(4,4);
+        $start = $this->map->getPoint(0, 0);
+        $end = $this->map->getPoint(4, 4);
         $this->astar->blocked(array(1));
-        $result = $this->astar->search($start,$end);
+        $result = $this->astar->search($start, $end);
         $this->assertEmpty($result);
     }
 
     public function testDiagonalHeuristic()
     {
-        $start = $this->map->getPoint(0,0);
-        $end = $this->map->getPoint(4,3);
+        $start = $this->map->getPoint(0, 0);
+        $end = $this->map->getPoint(4, 3);
         $this->astar->setHeuristic(new Diagonal());
-        $result = $this->astar->search($start,$end);
+        $result = $this->astar->search($start, $end);
         $this->assertSame(7, count($result));
     }
 }

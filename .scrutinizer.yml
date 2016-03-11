@@ -2,7 +2,7 @@ build:
     tests:
         override:
             -
-                command: 'php tools/phpunit.phar test --coverage-clover=/tmp/coverage.xml'
+                command: 'php tools/phpunit.phar test --coverage-clover=coverage.xml'
                 coverage:
-                    file: '/tmp/coverage.xml'
+                    file: 'coverage.xml'
                     format: 'php-clover'

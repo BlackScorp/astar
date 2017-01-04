@@ -86,19 +86,17 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $grid = new Grid($map);
         $astar = new Astar($grid);
         $astar->blocked([3, 2]);
-        $startPosition = $grid->getPoint(3, 2);
+        $startPosition = $grid->getPoint(2,3);
         $endPosition = $grid->getPoint(0, 0);
         $result = $astar->search($startPosition, $endPosition);
         $actualValues = [];
         $expectedValues = [
-            '3-2',
-            '4-2',
-            '4-1',
-            '4-0',
-            '3-0',
-            '2-0',
-            '1-0',
-            '0-0'
+            '2-3',
+            '1-3',
+            '0-3',
+            '0-2',
+            '0-1',
+            '0-0',
         ];
         foreach ($result as $node) {
             $actualValues[] = sprintf('%d-%d', $node->getY(), $node->getX());

@@ -30,7 +30,6 @@ class DiagonalTileGraph implements GraphInterface
 
     /**
      * @param Node $node
-     * @param bool $diagonal
      * @return Node[]
      */
     public function getNeighbors(Node $node)

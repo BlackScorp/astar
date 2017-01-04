@@ -16,4 +16,10 @@ interface GraphInterface
      * @return Node[]
      */
     public function getNeighbors(Node $current);
+    /**
+     * @param $x
+     * @param $y
+     * @return Node|false
+     */
+    public function getPoint($x, $y);
 }

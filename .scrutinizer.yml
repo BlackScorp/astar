@@ -1,4 +1,6 @@
 build:
+   environment:
+        php: '7.0.8'
     tests:
         override:
             -

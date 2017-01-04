@@ -35,7 +35,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $start = $this->map->getPoint(0, 0);
         $end = $this->map->getPoint(1, 1);
         $result = $this->astar->search($start, $end);
-        $this->assertSame(2, count($result));
+        $this->assertSame(3, count($result));
     }
 
     public function testSimpleDiagonalPath()
@@ -44,7 +44,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $end = $this->map->getPoint(1, 1);
         $this->astar->enableDiagonal();
         $result = $this->astar->search($start, $end);
-        $this->assertSame(1, count($result));
+        $this->assertSame(2, count($result));
     }
 
     public function testUnreachablePath()
@@ -62,13 +62,47 @@ class AstarTest extends PHPUnit_Framework_TestCase
         $end = $this->map->getPoint(4, 3);
         $this->astar->setHeuristic(new Diagonal());
         $result = $this->astar->search($start, $end);
-        $this->assertSame(7, count($result));
+        $this->assertSame(8, count($result));
     }
-    public function testEuclideanHeuristic(){
+
+    public function testEuclideanHeuristic()
+    {
         $start = $this->map->getPoint(0, 0);
         $end = $this->map->getPoint(4, 3);
         $this->astar->setHeuristic(new Euclidean());
         $result = $this->astar->search($start, $end);
-        $this->assertSame(7, count($result));
+        $this->assertSame(8, count($result));
+    }
+
+    public function testIssue2()
+    {
+        $map = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 2, 2, 0, 0],
+            [0, 3, 0, 1, 1],
+            [0, 0, 0, 1, 0],
+        ];
+        $grid = new Grid($map);
+        $astar = new Astar($grid);
+        $astar->blocked([3, 2]);
+        $startPosition = $grid->getPoint(3, 2);
+        $endPosition = $grid->getPoint(0, 0);
+        $result = $astar->search($startPosition, $endPosition);
+        $actualValues = [];
+        $expectedValues = [
+            '3-2',
+            '4-2',
+            '4-1',
+            '4-0',
+            '3-0',
+            '2-0',
+            '1-0',
+            '0-0'
+        ];
+        foreach ($result as $node) {
+            $actualValues[] = sprintf('%d-%d', $node->getY(), $node->getX());
+        }
+        $this->assertSame($expectedValues,$actualValues);
     }
 }

@@ -35,6 +35,11 @@ class Astar
         $this->heuristic = $heuristic;
     }
 
+    /**
+     * @param Node $start
+     * @param Node $end
+     * @return Node[]
+     */
     public function search(Node $start, Node $end)
     {
 
@@ -49,6 +54,7 @@ class Astar
         if ($current !== $end) {
             return [];
         }
+
         return $this->getReversedPath($current);
 
     }
@@ -102,6 +108,7 @@ class Astar
             $result[] = $current;
             $current = $current->getParent();
         }
+        $result[]=$current;
         return array_reverse($result);
     }
 }

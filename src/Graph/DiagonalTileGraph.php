@@ -1,7 +1,10 @@
 <?php
-namespace BlackScorp\Astar;
+namespace BlackScorp\Astar\Graph;
 
-class Grid
+use BlackScorp\Astar\GraphInterface;
+use BlackScorp\Astar\Node;
+
+class DiagonalTileGraph implements GraphInterface
 {
 
     private $nodes = array();
@@ -10,16 +13,17 @@ class Grid
     {
         foreach ($grid as $y => $cols) {
             foreach ($cols as $x => $value) {
-                $this->nodes[$y][$x] = new Node($y, $x, $value);
+                $this->nodes[$y][$x] = new Node($x, $y, $value);
             }
         }
     }
+
     /**
-     * @param $y
      * @param $x
-     * @return Node | false
+     * @param $y
+     * @return Node|false
      */
-    public function getPoint($y, $x)
+    public function getPoint($x, $y)
     {
         return isset($this->nodes[$y][$x]) ? $this->nodes[$y][$x] : false;
     }
@@ -29,7 +33,7 @@ class Grid
      * @param bool $diagonal
      * @return Node[]
      */
-    public function getNeighbors(Node $node, $diagonal = false)
+    public function getNeighbors(Node $node)
     {
         $result = array();
         $x = $node->getX();
@@ -41,15 +45,15 @@ class Grid
             [$y, $x - 1],
             [$y, $x + 1]
         ];
-        if ($diagonal) {
+
             $neighbourLocations[] = [$y - 1, $x - 1];
             $neighbourLocations[] = [$y + 1, $x - 1];
             $neighbourLocations[] = [$y - 1, $x + 1];
             $neighbourLocations[] = [$y + 1, $x + 1];
-        }
+
         foreach ($neighbourLocations as $location) {
             list($y, $x) = $location;
-            $node = $this->getPoint($y, $x);
+            $node = $this->getPoint($x, $y);
             if ($node) {
                 $result[] = $node;
             }

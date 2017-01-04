@@ -1,6 +1,7 @@
 <?php
 use BlackScorp\Astar\Astar;
-use BlackScorp\Astar\Grid;
+use BlackScorp\Astar\Graph\DiagonalTileGraph;
+use BlackScorp\Astar\Graph\TileGraph;
 use BlackScorp\Astar\Heuristic\Diagonal;
 use BlackScorp\Astar\Heuristic\Euclidean;
 
@@ -9,7 +10,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 class AstarTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Grid
+     * @var TileGraph
      */
     private $map = null;
     /**
@@ -26,7 +27,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
             [0, 0, 0, 1, 1],
             [0, 0, 0, 1, 0],
         ];
-        $this->map = new Grid($map);
+        $this->map = new TileGraph($map);
         $this->astar = new Astar($this->map);
     }
 
@@ -40,10 +41,20 @@ class AstarTest extends PHPUnit_Framework_TestCase
 
     public function testSimpleDiagonalPath()
     {
-        $start = $this->map->getPoint(0, 0);
-        $end = $this->map->getPoint(1, 1);
-        $this->astar->enableDiagonal();
-        $result = $this->astar->search($start, $end);
+        $map = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1],
+            [0, 0, 0, 1, 0],
+        ];
+        $map = new DiagonalTileGraph($map);
+        $astar = new Astar($map);
+
+        $start = $map->getPoint(0, 0);
+        $end = $map->getPoint(1, 1);
+
+        $result = $astar->search($start, $end);
         $this->assertSame(2, count($result));
     }
 
@@ -59,7 +70,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
     public function testDiagonalHeuristic()
     {
         $start = $this->map->getPoint(0, 0);
-        $end = $this->map->getPoint(4, 3);
+        $end = $this->map->getPoint(3, 4);
         $this->astar->setHeuristic(new Diagonal());
         $result = $this->astar->search($start, $end);
         $this->assertSame(8, count($result));
@@ -68,7 +79,7 @@ class AstarTest extends PHPUnit_Framework_TestCase
     public function testEuclideanHeuristic()
     {
         $start = $this->map->getPoint(0, 0);
-        $end = $this->map->getPoint(4, 3);
+        $end = $this->map->getPoint(3, 4);
         $this->astar->setHeuristic(new Euclidean());
         $result = $this->astar->search($start, $end);
         $this->assertSame(8, count($result));
@@ -83,10 +94,10 @@ class AstarTest extends PHPUnit_Framework_TestCase
             [0, 3, 0, 1, 1],
             [0, 0, 0, 1, 0],
         ];
-        $grid = new Grid($map);
+        $grid = new TileGraph($map);
         $astar = new Astar($grid);
         $astar->blocked([3, 2]);
-        $startPosition = $grid->getPoint(2,3);
+        $startPosition = $grid->getPoint(3, 2);
         $endPosition = $grid->getPoint(0, 0);
         $result = $astar->search($startPosition, $endPosition);
         $actualValues = [];

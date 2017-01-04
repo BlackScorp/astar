@@ -14,7 +14,7 @@ class Node
     private $guessedScore = 0;
     private $score = 0;
 
-    public function __construct($y, $x, $costs)
+    public function __construct($x, $y, $costs)
     {
         $this->x = (int)$x;
         $this->y = (int)$y;

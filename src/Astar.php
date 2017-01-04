@@ -1,18 +1,18 @@
 <?php
 namespace BlackScorp\Astar;
 
+
 use BlackScorp\Astar\Heuristic\Manhattan;
 
 class Astar
 {
 
-    private $diagonal = false;
     private $blocked = array();
     /**
      * @var HeuristicInterface
      */
     private $heuristic = null;
-    private $grid = null;
+    private $graph = null;
 
 
     public function blocked(array $types)
@@ -20,14 +20,10 @@ class Astar
         $this->blocked = $types;
     }
 
-    public function enableDiagonal()
-    {
-        $this->diagonal = true;
-    }
 
-    public function __construct(Grid $grid)
+    public function __construct(GraphInterface $graph)
     {
-        $this->grid = $grid;
+        $this->graph = $graph;
     }
 
     public function setHeuristic(HeuristicInterface $heuristic)
@@ -74,7 +70,7 @@ class Astar
             $current = $heap->extract();
 
             $current->close();
-            $neighbors = $this->grid->getNeighbors($current, $this->diagonal);
+            $neighbors = $this->graph->getNeighbors($current);
             foreach ($neighbors as $neighbor) {
                 if ($neighbor->isClosed() || in_array($neighbor->getCosts(), $this->blocked)) {
                     continue;

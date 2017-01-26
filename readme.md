@@ -102,3 +102,6 @@ Please feel free to make pull requests, there is still place for improvement, th
 
 Run the tests to be sure nothing break.
 
+## License
+
+A-Star is free software distributed under the terms of the MIT license.

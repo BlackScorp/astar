@@ -3,8 +3,10 @@ namespace BlackScorp\Astar;
 
 class Grid
 {
-
-    private $nodes = array();
+    /**
+     * @var array
+     */
+    private $nodes = [];
 
     public function __construct($grid)
     {
@@ -31,7 +33,7 @@ class Grid
      */
     public function getNeighbors(Node $node, $diagonal = false)
     {
-        $result = array();
+        $result = [];
         $x = $node->getX();
         $y = $node->getY();
 
@@ -47,6 +49,7 @@ class Grid
             $neighbourLocations[] = [$y - 1, $x + 1];
             $neighbourLocations[] = [$y + 1, $x + 1];
         }
+
         foreach ($neighbourLocations as $location) {
             list($y, $x) = $location;
             $node = $this->getPoint($y, $x);

@@ -1,7 +1,7 @@
 <?php
 namespace BlackScorp\Astar;
 
-class Grid
+class Grid implements NodeCollectionInterface
 {
     /**
      * @var array

@@ -12,7 +12,7 @@ class Astar
      * @var HeuristicInterface
      */
     private $heuristic = null;
-    private $grid = null;
+    private $nodeCollection = null;
 
 
     public function blocked(array $types)
@@ -25,9 +25,9 @@ class Astar
         $this->diagonal = true;
     }
 
-    public function __construct(Grid $grid)
+    public function __construct(NodeCollectionInterface $nodeCollection)
     {
-        $this->grid = $grid;
+        $this->nodeCollection = $nodeCollection;
     }
 
     public function setHeuristic(HeuristicInterface $heuristic)
@@ -74,7 +74,7 @@ class Astar
             $current = $heap->extract();
 
             $current->close();
-            $neighbors = $this->grid->getNeighbors($current, $this->diagonal);
+            $neighbors = $this->nodeCollection->getNeighbors($current, $this->diagonal);
             foreach ($neighbors as $neighbor) {
                 if ($neighbor->isClosed() || in_array($neighbor->getCosts(), $this->blocked)) {
                     continue;

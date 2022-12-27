@@ -8,7 +8,7 @@ class ScoreHeap extends \SplHeap
      * @param Node $value2
      * @return int
      */
-    protected function compare($value1, $value2)
+    protected function compare($value1, $value2): int
     {
 
         if ($value1->getTotalScore() === $value2->getTotalScore()) {
